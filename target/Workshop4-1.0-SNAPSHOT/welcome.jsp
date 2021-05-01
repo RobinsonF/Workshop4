@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.io.PrintWriter" %><%--
   Created by IntelliJ IDEA.
   User: Robinson
   Date: 27/04/2021
@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -27,7 +28,11 @@
         <div class="col-lg-4 col-10">
             <div class="tm-brand-container">
                 <div class="tm-brand-texts">
-                    <h1 class="text-uppercase tm-brand-name">Pet Citizens</h1>
+                    <%
+                        String nombre = request.getParameter("user");
+                        out.println("<h1 class=\"text-uppercase tm-brand-name\"> User: " + nombre + "</h1>");
+
+                    %>
                 </div>
             </div>
         </div>
@@ -52,11 +57,11 @@
                             </li>
                             <li class="nav-item active">
                                 <div class="tm-nav-link-highlight"></div>
-                                <a class="nav-link" href="contact.html">Add photo<span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="#addPhoto">Add photo<span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
                                 <div class="tm-nav-link-highlight"></div>
-                                <a class="nav-link" href="about.html"> Information</a>
+                                <a class="nav-link" href="#mostrarAgregar"> Information</a>
                             </li>
                         </ul>
                     </div>
@@ -75,7 +80,7 @@
             </div>
             <div class="tm-page-col-right">
                 <div>
-                <a href="#"><img src="img/contact-us.jpg"  class="tm-welcome-parallax" /></a>
+                <a href="#"><img src="img/pets.jpg"  class="tm-welcome-parallax"  width="500" height="341" align="right"/></a>
                 </div>
             </div>
         </div>
@@ -91,7 +96,7 @@
                 </div>
             </div>
             <div class="tm-page-col-right tm-form-container">
-                <h2 class="tm-text-secondary mb-4">Agrega la imagen de tu mascota</h2>
+                <h2 class="tm-text-secondary mb-4" id = "addPhoto">Agrega la imagen de tu mascota</h2>
                 <form
                         action="contact.html"
                         method="POST"
@@ -132,6 +137,7 @@
                     </div>
 
                     <div class="">
+                        <input type="submit"  name="accion" value="Guardar"><br>
                         <button
                                 type="submit"
                                 class="btn btn-secondary tm-btn-submit rounded-0">
@@ -142,6 +148,10 @@
             </div>
         </div>
     </section>
+    <input name="ver" type="button" value = "Ver Informacion" id="ver" onclick="mostrarMascota()"/>
+    <div id = "mostrarAgregar">
+
+    </div>
 
 </div>
 
@@ -164,6 +174,31 @@
             $("#file_name_label").attr("placeholder", label);
         });
     });
+</script>
+<script>
+    function mostrarMascota(){
+
+        var contenido = document.querySelector('#mostrarAgregar');
+        contenido.innerHTML = ``
+        contenido.innerHTML += `
+      <table id = "table" class="table table-dark table-striped table-bordered">
+      <thead>
+      <tr>
+      <td>Nombre de la mascota</td>
+      <td>Descripción</td>
+      <td>Foto</td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+      <td>Aquí va el nombre</td>
+      <td>Aquí va la descripcion</td>
+      <td>Aquí va la foto</td>
+      </tr>
+      </tbody>
+      </table>
+      `
+    }
 </script>
 </body>
 
