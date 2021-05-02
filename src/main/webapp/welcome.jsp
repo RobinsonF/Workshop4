@@ -9,18 +9,18 @@
 <html>
 <head>
 
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>Next Level - Contact</title>
     <!--
     Next Level CSS Template
     https://templatemo.com/tm-532-next-level
     -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" />
-    <link rel="stylesheet" href="css/all.min.css" />
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/templatemo-style.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600"/>
+    <link rel="stylesheet" href="css/all.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/templatemo-style.css"/>
 </head>
 <body>
 <div class="container-fluid">
@@ -31,7 +31,24 @@
                     <%
                         String nombre = request.getParameter("user");
                         out.println("<h1 class=\"text-uppercase tm-brand-name\"> User: " + nombre + "</h1>");
+                        try {
+                            Cookie c1 = new Cookie("user", nombre);
+                            response.addCookie(c1);
+                        } catch (Exception e) {
 
+                        }
+
+
+                    %>
+                    <%
+                        try {
+                            Cookie[] cookies = request.getCookies();
+                            for (int i = 0; i < cookies.length; i++) {
+                                out.println("<h5>" + cookies[i].getName() + ":" + cookies[i].getValue() + "</h5>");
+                            }
+                        } catch (Exception e) {
+
+                        }
                     %>
                 </div>
             </div>
@@ -75,12 +92,15 @@
             <div class="tm-page-col-left tm-welcome-box tm-bg-gradient">
                 <p class="tm-welcome-text">
                     <e
-                    >Pet Citizens es el entorno ideal para la información de tu mascota. En esta versión encontrarás una opción para poder añadir una imagen y descripción de tu animal.</e>
+                    >Pet Citizens es el entorno ideal para la información de tu mascota. En esta versión encontrarás una
+                        opción para poder añadir una imagen y descripción de tu animal.
+                    </e>
                 </p>
             </div>
             <div class="tm-page-col-right">
                 <div>
-                <a href="#"><img src="img/pets.jpg"  class="tm-welcome-parallax"  width="500" height="341" align="right"/></a>
+                    <a href="#"><img src="img/pets.jpg" class="tm-welcome-parallax" width="500" height="341"
+                                     align="right"/></a>
                 </div>
             </div>
         </div>
@@ -91,31 +111,27 @@
             <div class="tm-page-col-left">
                 <div class="tm-contact-container tm-mb-6">
                     <div class="tm-location-container">
-                        <a href="#"><img src="img/map.png" alt="Map image" class="img-fluid" /></a>
+                        <a href="#"><img src="img/map.png" alt="Map image" class="img-fluid"/></a>
                     </div>
                 </div>
             </div>
             <div class="tm-page-col-right tm-form-container">
-                <h2 class="tm-text-secondary mb-4" id = "addPhoto">Agrega la imagen de tu mascota</h2>
-                <form
-                        action="contact.html"
-                        method="POST"
-                        id="tm_contact_form"
-                        enctype="multipart/form-data">
+                <h2 class="tm-text-secondary mb-4" id="addPhoto">Agrega la imagen de tu mascota</h2>
+                <form action="welcome.jsp" method="post">
                     <div class="form-group">
                         <input
                                 type="text"
-                                id="contact_name"
-                                name="contact_name"
+                                id="nombreMascota"
+                                name="nombreMascota"
                                 class="form-control rounded-0 border-top-0 border-right-0 border-left-0"
                                 placeholder="Nombre de la mascota"
-                                required="" />
+                                required=""/>
                     </div>
                     <div class="tm-mb-5">
                 <textarea
                         rows="10"
-                        id="contact_message"
-                        name="contact_message"
+                        id="descripcion"
+                        name="descripcion"
                         class="form-control rounded-0"
                         placeholder="Descripción de la mascota"
                         required=""></textarea>
@@ -126,31 +142,36 @@
                                 type="text"
                                 class="border-top-0 border-right-0 border-left-0"
                                 placeholder="Inserta la imagen de tu mascota"
-                                disabled />
+                                disabled/>
                         <label class="btn btn-outline btn-file">
                             Browse...
                             <input
                                     type="file"
-                                    name="file_to_upload"
-                                    style="display: none;" />
+                                    name="foto"
+                                    id="foto"
+                                    style="display: none;"/>
                         </label>
                     </div>
 
                     <div class="">
-                        <input type="submit"  name="accion" value="Guardar"><br>
-                        <button
-                                type="submit"
-                                class="btn btn-secondary tm-btn-submit rounded-0">
-                            Enviar
-                        </button>
+                        <input type="submit" name="accion" value="Guardar"
+                               class="btn btn-secondary tm-btn-submit rounded-0"><br>
                     </div>
                 </form>
             </div>
         </div>
     </section>
-    <input name="ver" type="button" value = "Ver Informacion" id="ver" onclick="mostrarMascota()"/>
-    <div id = "mostrarAgregar">
+    <input name="ver" type="button" value="Ver Informacion" id="ver" onclick="mostrarMascota()"/>
+    <div id="mostrarAgregar">
+        <%
 
+            String nombreMascota = request.getParameter("nombreMascota");
+            String descripcion = request.getParameter("descripcion");
+            String foto = request.getParameter("foto");
+            String[] info = {nombreMascota, descripcion, foto};
+
+
+        %>
     </div>
 
 </div>
@@ -159,7 +180,7 @@
 <script src="js/parallax.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script>
-    $(document).on("change", ":file", function() {
+    $(document).on("change", ":file", function () {
         var input = $(this),
             numFiles = input.get(0).files ? input.get(0).files.length : 1,
             label = input
@@ -169,14 +190,14 @@
         input.trigger("fileselect", [numFiles, label]);
     });
 
-    $(document).ready(function() {
-        $(":file").on("fileselect", function(event, numFiles, label) {
+    $(document).ready(function () {
+        $(":file").on("fileselect", function (event, numFiles, label) {
             $("#file_name_label").attr("placeholder", label);
         });
     });
 </script>
 <script>
-    function mostrarMascota(){
+    function mostrarMascota(nombre, descripcion, foto) {
 
         var contenido = document.querySelector('#mostrarAgregar');
         contenido.innerHTML = ``
@@ -191,9 +212,9 @@
       </thead>
       <tbody>
       <tr>
-      <td>Aquí va el nombre</td>
-      <td>Aquí va la descripcion</td>
-      <td>Aquí va la foto</td>
+      <td>nombre</td>
+      <td>descripcion</td>
+      <td>foto</td>
       </tr>
       </tbody>
       </table>

@@ -18,8 +18,9 @@ public class Myservlet1 extends HttpServlet {
             PrintWriter out = response.getWriter();
             Cookie c1 = new Cookie("user",nombre);
             response.addCookie(c1);
-            out.println(nombre);
-            out.println("<a href='welcome'>");
+            out.println("Bienvenido" + nombre);
+            out.println("<br />");
+            out.println("<a href='welcome'> View details</a>");
             out.close();
 
         } catch(Exception b){
