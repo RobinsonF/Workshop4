@@ -1,7 +1,10 @@
 package co.edu.unbosque.model.persistencia;
 
+import co.edu.unbosque.Workshop4.Usuario;
+
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Archivo {
     private final String SAMPLE_CSV_FILE = "Data\\pets.csv";
