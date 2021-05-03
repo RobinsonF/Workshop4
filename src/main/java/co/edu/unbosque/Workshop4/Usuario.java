@@ -1,16 +1,19 @@
 package co.edu.unbosque.Workshop4;
 
 import java.io.File;
+import com.google.gson.annotations.Expose;
 import java.io.InputStream;
 import java.util.Date;
 
+
 public class Usuario {
-
+    @Expose
     private String nombre = "";
-
+    @Expose
     private String descripcion = "";
-
+    @Expose
     private Date fecha;
+    @Expose
     private InputStream foto;
 
     public Usuario(){
