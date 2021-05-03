@@ -152,7 +152,19 @@
         </div>
     </section>
     <input name="ver" type="button" value="Ver Informacion" id="ver" onclick="mostrarMascota()"/>
-    <div id="mostrarAgregar">
+    <div >
+        <table id = "table" class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <td>Nombre</td>
+                <td>Descripcion</td>
+                <td>Foto</td>
+            </tr>
+            </thead>
+            <tbody id = "crearTabla">
+
+            </tbody>
+        </table>
     </div>
 
 </div>
@@ -170,15 +182,16 @@
         console.log(datos2)
         var datosJson = JSON.parse(datos2);
         console.log(JSON.parse(datos2))
-        contenido.innerHTML = `
+        contenido.innerHTML = ``
         for (var i = 0; i < datosJson.length; i++) {
-            contenido.innerHTML +=
+            contenido.innerHTML +=`
       <tr>
       <td>${datosJson["nombre"]}</td>
       <td>${datosJson["descripcion"]}</td>
       <td>${datosJson["foto"]}</td>
       </tr>
       `
+        }
     }
 </script>
 </body>

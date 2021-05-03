@@ -40,16 +40,6 @@
 
 
                     %>
-                    <%
-                        try {
-                            Cookie[] cookies = request.getCookies();
-                            for (int i = 0; i < cookies.length; i++) {
-                                out.println("<h5>" + cookies[i].getName() + ":" + cookies[i].getValue() + "</h5>");
-                            }
-                        } catch (Exception e) {
-
-                        }
-                    %>
                 </div>
             </div>
         </div>
@@ -117,7 +107,7 @@
             </div>
             <div class="tm-page-col-right tm-form-container">
                 <h2 class="tm-text-secondary mb-4" id="addPhoto">Agrega la imagen de tu mascota</h2>
-                <form action="welcome.jsp" method="post">
+                <form action="informacion" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <input
                                 type="text"
@@ -162,16 +152,19 @@
         </div>
     </section>
     <input name="ver" type="button" value="Ver Informacion" id="ver" onclick="mostrarMascota()"/>
-    <div id="mostrarAgregar">
-        <%
+    <div >
+        <table id = "table" class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <td>Nombre</td>
+                <td>Descripcion</td>
+                <td>Foto</td>
+            </tr>
+            </thead>
+            <tbody id = "crearTabla">
 
-            String nombreMascota = request.getParameter("nombreMascota");
-            String descripcion = request.getParameter("descripcion");
-            String foto = request.getParameter("foto");
-            String[] info = {nombreMascota, descripcion, foto};
-
-
-        %>
+            </tbody>
+        </table>
     </div>
 
 </div>
@@ -179,46 +172,26 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/parallax.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script>
-    $(document).on("change", ":file", function () {
-        var input = $(this),
-            numFiles = input.get(0).files ? input.get(0).files.length : 1,
-            label = input
-                .val()
-                .replace(/\\/g, "/")
-                .replace(/.*\//, "");
-        input.trigger("fileselect", [numFiles, label]);
-    });
 
-    $(document).ready(function () {
-        $(":file").on("fileselect", function (event, numFiles, label) {
-            $("#file_name_label").attr("placeholder", label);
-        });
-    });
-</script>
 <script>
-    function mostrarMascota(nombre, descripcion, foto) {
+    function mostrarMascota( ) {
 
-        var contenido = document.querySelector('#mostrarAgregar');
+        var contenido = document.querySelector('#crearTabla');
+        var datos = ${json};
+        var datos2 = JSON.stringify(datos);
+        console.log(datos2)
+        var datosJson = JSON.parse(datos2);
+        console.log(JSON.parse(datos2))
         contenido.innerHTML = ``
-        contenido.innerHTML += `
-      <table id = "table" class="table table-dark table-striped table-bordered">
-      <thead>
+        for (var i = 0; i < datosJson.length; i++) {
+            contenido.innerHTML +=`
       <tr>
-      <td>Nombre de la mascota</td>
-      <td>Descripción</td>
-      <td>Foto</td>
+      <td>${datosJson["nombre"]}</td>
+      <td>${datosJson["descripcion"]}</td>
+      <td>${datosJson["foto"]}</td>
       </tr>
-      </thead>
-      <tbody>
-      <tr>
-      <td>nombre</td>
-      <td>descripcion</td>
-      <td>foto</td>
-      </tr>
-      </tbody>
-      </table>
       `
+        }
     }
 </script>
 </body>
