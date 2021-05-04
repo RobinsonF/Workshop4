@@ -151,46 +151,40 @@
             </div>
         </div>
     </section>
-    <input name="ver" type="button" value="Ver Informacion" id="ver" onclick="mostrarMascota()"/>
-    <div >
-        <table id = "table" class="table table-striped table-bordered">
+    <input name="ver" type="button" value="Ver Informacion" id="ver" onclick="mostrarMascota(servlet = 'json')"/>
+    <div>
+        <table id = "table" class="table table-dark table-striped table-bordered">
             <thead>
             <tr>
                 <td>Nombre</td>
                 <td>Descripcion</td>
+                <td>Fecha</td>
                 <td>Foto</td>
             </tr>
             </thead>
             <tbody id = "crearTabla">
-
             </tbody>
         </table>
     </div>
 
 </div>
-
-<script src="js/jquery.min.js"></script>
-<script src="js/parallax.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-
 <script>
-    function mostrarMascota( ) {
+    function mostrarMascota(servlet, columns) {
+        let contenido = document.querySelector('#crearTabla');
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', '${pageContext.request.contextPath}/' + servlet, true);
+        xhr.send();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                let data = JSON.parse(xhr.responseText);
+                console.log(data);
+                console.log(data[0]["nombre"])
+                contenido.innerHTML = '';
+                for (let item of data) {
+                    contenido.innerHTML += '<tr>' + '<td>' + item.nombre + '</td>' + '<td>' + item.descripcion + '</td>' + '<td>' + item.fecha + '</td>' + '<td>' + item.foto + '</td>' + '</tr>';
+                }
 
-        var contenido = document.querySelector('#crearTabla');
-        var datos = ${json};
-        var datos2 = JSON.stringify(datos);
-        console.log(datos2)
-        var datosJson = JSON.parse(datos2);
-        console.log(JSON.parse(datos2))
-        contenido.innerHTML = ``
-        for (var i = 0; i < datosJson.length; i++) {
-            contenido.innerHTML +=`
-      <tr>
-      <td>${datosJson["nombre"]}</td>
-      <td>${datosJson["descripcion"]}</td>
-      <td>${datosJson["foto"]}</td>
-      </tr>
-      `
+            }
         }
     }
 </script>

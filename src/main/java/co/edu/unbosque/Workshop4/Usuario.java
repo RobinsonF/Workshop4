@@ -12,14 +12,15 @@ public class Usuario {
     @Expose
     private String descripcion = "";
     @Expose
-    private Date fecha;
+    private String fecha = "";
     @Expose
-    private InputStream foto;
+    private String foto = "";
 
     public Usuario(){
 
     }
-    public Usuario(String nombre, String descripcion, Date fecha, InputStream foto) {
+
+    public Usuario(String nombre, String descripcion, String fecha, String foto) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fecha = fecha;
@@ -42,19 +43,19 @@ public class Usuario {
         this.descripcion = descripcion;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
-    public InputStream getFoto() {
+    public String getFoto() {
         return foto;
     }
 
-    public void setFoto(InputStream foto) {
+    public void setFoto(String foto) {
         this.foto = foto;
     }
 }

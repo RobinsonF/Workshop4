@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Archivo {
-    private final String SAMPLE_CSV_FILE = "Data\\pets.csv";
+    private final String SAMPLE_CSV_FILE = "C:\\Users\\Robinson\\Workshop4\\src\\main\\java\\Data\\pets.csv";
 
     public Archivo() {
 
@@ -43,8 +43,6 @@ public class Archivo {
     public ArrayList<Usuario> leerArchivo() {
         ArrayList<Usuario> lista = new ArrayList<Usuario>();
         BufferedReader bufferLectura = null;
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        Date fechaDate = null;
         try {
             bufferLectura = new BufferedReader(new FileReader(SAMPLE_CSV_FILE));
             String linea = bufferLectura.readLine();
@@ -56,29 +54,24 @@ public class Archivo {
                     try {
                         pet.setNombre(campos[0]);
                         pet.setDescripcion(campos[1]);
-                        pet.setFecha(formato.parse(campos[2]));
-                        pet.setFoto(new ByteArrayInputStream(campos[3].getBytes()));
+                        pet.setFecha(campos[2]);
+                        pet.setFoto(campos[3]);
                         lista.add(pet);
                     } catch (NumberFormatException e) {
-                        System.out.println("Error al leer archivo number");
+                        System.out.println(e);
 
-                    } catch (ParseException e) {
-                        System.out.println("Error al leer archivo parse");
-
-                        e.printStackTrace();
                     }
                 }
                 linea = bufferLectura.readLine();
             }
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error al leer archivo");
+            System.out.println(e);
         } finally {
             if (bufferLectura != null) {
                 try {
                     bufferLectura.close();
                 } catch (IOException e) {
-                    System.out.println("Error al leer archivo");
+                    System.out.println(e);
 
                     e.printStackTrace();
                 }

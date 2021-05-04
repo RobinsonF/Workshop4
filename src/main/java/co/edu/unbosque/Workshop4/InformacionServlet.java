@@ -13,13 +13,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 @WebServlet(name = "informacion", value = "/informacion")
-@MultipartConfig
+@MultipartConfig(fileSizeThreshold = 1024 * 1024,
+        maxFileSize = 1024 * 1024 * 5,
+        maxRequestSize = 1024 * 1024 * 5 * 5)
 public class InformacionServlet extends HttpServlet {
     ArrayList<Usuario> listaUsuario = new ArrayList<Usuario>();
     Archivo archivo = new Archivo();
@@ -33,16 +39,11 @@ public class InformacionServlet extends HttpServlet {
         Part foto = request.getPart("foto");
         String fileName = Paths.get(foto.getSubmittedFileName()).getFileName().toString();
         InputStream fileContent = foto.getInputStream();
-        request.getSession().setAttribute("nombreMascota", nombreMascota);
-        request.getSession().setAttribute("descripcion", descripcion);
-        request.getSession().setAttribute("foto", fileContent);
-        Usuario usuario = new Usuario(nombreMascota, descripcion, null, fileContent);
+        SimpleDateFormat formatter3 = new SimpleDateFormat("dd/MM/yyyy");
+        Date fechaHoy3 = new Date();
+        Usuario usuario = new Usuario(nombreMascota, descripcion, String.valueOf(formatter3.format(fechaHoy3)), String.valueOf(fileName));
         listaUsuario.add(usuario);
         archivo.escribirArchivo(listaUsuario);
-        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-        String gson2 = gson.toJson(listaUsuario);
-        System.out.println(gson2);
-        request.getSession().setAttribute("json", gson2);
         RequestDispatcher dis = getServletContext().getRequestDispatcher("/welcome.jsp");
         dis.forward(request,response);
     }
