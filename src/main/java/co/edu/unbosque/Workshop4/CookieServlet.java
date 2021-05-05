@@ -1,5 +1,6 @@
 package co.edu.unbosque.Workshop4;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -9,7 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet(name = "cookies", value = "/cookies")
-public class Myservlet1 extends HttpServlet {
+public class CookieServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response){
         response.setContentType("text/html");
@@ -18,11 +19,9 @@ public class Myservlet1 extends HttpServlet {
             PrintWriter out = response.getWriter();
             Cookie c1 = new Cookie("user",nombre);
             response.addCookie(c1);
-            out.println("Bienvenido" + nombre);
-            out.println("<br />");
-            out.println("<a href='welcome'> View details</a>");
-            out.close();
-
+            System.out.println(nombre);
+            RequestDispatcher dis = getServletContext().getRequestDispatcher("/welcome.jsp");
+            dis.forward(request,response);
         } catch(Exception b){
 
         }

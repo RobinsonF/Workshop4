@@ -9,10 +9,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
+import javax.servlet.http.*;
 import java.io.*;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -28,6 +25,7 @@ import java.util.stream.Collectors;
 public class InformacionServlet extends HttpServlet {
     ArrayList<Usuario> listaUsuario = new ArrayList<Usuario>();
     Archivo archivo = new Archivo();
+    Usuario user = new Usuario();
     private static final long serialVersionUID = 1L;
 
     private String getFileName(Part part) {
@@ -42,6 +40,11 @@ public class InformacionServlet extends HttpServlet {
     }
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
+        Cookie[] cookies = request.getCookies();
+        Cookie cookies2 = buscaCookie("user", cookies);
+        String nombreUsuario = cookies2.getValue();
+        request.getSession().setAttribute("usuarioCookie", nombreUsuario);
+        System.out.println(nombreUsuario);
         String nombreMascota = request.getParameter("nombreMascota");
         String descripcion = request.getParameter("descripcion");
         Part part = request.getPart("foto");
@@ -53,6 +56,10 @@ public class InformacionServlet extends HttpServlet {
             uploadDir.mkdir();
         try {
                 fileName = getFileName(part);
+                String name = fileName.substring(fileName.indexOf("."),fileName.length());
+                if(user.verificarNombreFoto(listaUsuario, fileName)){
+                    fileName = user.secuenciaAlfanumerica() + name;
+                }
                 part.write(uploadPath + File.separator + fileName);
                 System.out.println(fileName);
             request.setAttribute("message", "File " + fileName + " has uploaded successfully!");
@@ -61,11 +68,21 @@ public class InformacionServlet extends HttpServlet {
         }
         SimpleDateFormat formatter3 = new SimpleDateFormat("dd/MM/yyyy");
         Date fechaHoy3 = new Date();
-        Usuario usuario = new Usuario(nombreMascota, descripcion, String.valueOf(formatter3.format(fechaHoy3)), fileName);
+        Usuario usuario = new Usuario(nombreUsuario, nombreMascota, descripcion, String.valueOf(formatter3.format(fechaHoy3)), fileName);
         listaUsuario.add(usuario);
         archivo.escribirArchivo(listaUsuario);
         RequestDispatcher dis = getServletContext().getRequestDispatcher("/welcome.jsp");
         dis.forward(request,response);
     }
 
+    private Cookie buscaCookie(String nombre, Cookie[] cookies) {
+        if (cookies == null)
+            return null;
+
+        for (int i = 0; i < cookies.length; i++)
+            if (cookies[i].getName().equals(nombre))
+                return cookies[i];
+        return null;
+    }
 }
+

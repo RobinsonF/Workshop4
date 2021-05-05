@@ -22,6 +22,8 @@ public class Archivo {
 
             for (Usuario pet : lista) {
                 bw.append(SALTO);
+                bw.append(pet.getNombreUsuarion());
+                bw.append(DELIMITADOR);
                 bw.append(pet.getNombre());
                 bw.append(DELIMITADOR);
                 bw.append(pet.getDescripcion());
@@ -47,12 +49,13 @@ public class Archivo {
             while (linea != null) {
                 Usuario pet = new Usuario();
                 String[] campos = linea.split(",");
-                if (campos.length == 4) {
+                if (campos.length == 5) {
                     try {
-                        pet.setNombre(campos[0]);
-                        pet.setDescripcion(campos[1]);
-                        pet.setFecha(campos[2]);
-                        pet.setFoto(campos[3]);
+                        pet.setNombreUsuarion(campos[0]);
+                        pet.setNombre(campos[1]);
+                        pet.setDescripcion(campos[2]);
+                        pet.setFecha(campos[3]);
+                        pet.setFoto(campos[4]);
                         lista.add(pet);
                     } catch (NumberFormatException e) {
                         System.out.println(e);

@@ -37,8 +37,6 @@
                         } catch (Exception e) {
 
                         }
-
-
                     %>
                 </div>
             </div>
@@ -152,7 +150,7 @@
         </div>
     </section>
     <input name="ver" type="button" value="Ver Informacion" id="ver" onclick="mostrarMascota(servlet = 'json')"/>
-    <div>
+    <div id = "mostrarAgregar">
         <table id = "table" class="table table-dark table-striped table-bordered">
             <thead>
             <tr>
@@ -172,6 +170,10 @@
     function mostrarMascota(servlet) {
         let contenido = document.querySelector('#crearTabla');
         const xhr = new XMLHttpRequest();
+        var cookieUsuario = document.cookie.valueOf();
+        console.log(cookieUsuario)
+        var cookie = cookieUsuario.substring(cookieUsuario.indexOf("=")+1, cookieUsuario.indexOf(";"))
+        console.log(cookie)
         xhr.open('GET', '${pageContext.request.contextPath}/' + servlet, true);
         xhr.send();
         xhr.onreadystatechange = function() {
@@ -180,7 +182,9 @@
                 console.log(data);
                 contenido.innerHTML = '';
                 for (let item of data) {
-                    contenido.innerHTML += '<tr>' + '<td>' + item.nombre + '</td>' + '<td>' + item.descripcion + '</td>' + '<td>' + item.fecha + '</td>' + '<td>' + '<img src = "' + 'upload/' + item.foto + '" width="100" height="100">' +'</td>' + '</tr>';
+                    if(item.nombreUsuarion == cookie){
+                        contenido.innerHTML += '<tr>' + '<td>' + item.nombre + '</td>' + '<td>' + item.descripcion + '</td>' + '<td>' + item.fecha + '</td>' + '<td>' + '<img src = "' + 'upload/' + item.foto + '" width="100" height="100">' +'</td>' + '</tr>';
+                    }
                 }
             }
         }
