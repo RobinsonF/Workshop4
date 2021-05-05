@@ -16,12 +16,10 @@ import java.util.ArrayList;
 public class JsonServlet extends HttpServlet {
     ArrayList<Usuario> listaUsuario = new ArrayList<Usuario>();
     Archivo archivo = new Archivo();
-    public JsonServlet(){
-        listaUsuario = archivo.leerArchivo();
-    }
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
+        listaUsuario = archivo.leerArchivo();
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         String jsonUsuarios = gson.toJson(listaUsuario);
         System.out.println(jsonUsuarios);

@@ -169,7 +169,7 @@
 
 </div>
 <script>
-    function mostrarMascota(servlet, columns) {
+    function mostrarMascota(servlet) {
         let contenido = document.querySelector('#crearTabla');
         const xhr = new XMLHttpRequest();
         xhr.open('GET', '${pageContext.request.contextPath}/' + servlet, true);
@@ -178,12 +178,10 @@
             if (xhr.readyState == 4) {
                 let data = JSON.parse(xhr.responseText);
                 console.log(data);
-                console.log(data[0]["nombre"])
                 contenido.innerHTML = '';
                 for (let item of data) {
-                    contenido.innerHTML += '<tr>' + '<td>' + item.nombre + '</td>' + '<td>' + item.descripcion + '</td>' + '<td>' + item.fecha + '</td>' + '<td>' + item.foto + '</td>' + '</tr>';
+                    contenido.innerHTML += '<tr>' + '<td>' + item.nombre + '</td>' + '<td>' + item.descripcion + '</td>' + '<td>' + item.fecha + '</td>' + '<td>' + '<img src = "' + 'upload/' + item.foto + '" width="100" height="100">' +'</td>' + '</tr>';
                 }
-
             }
         }
     }

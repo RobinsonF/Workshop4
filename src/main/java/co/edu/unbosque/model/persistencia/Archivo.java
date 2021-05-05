@@ -9,19 +9,16 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Archivo {
-    private final String SAMPLE_CSV_FILE = "C:\\Users\\Robinson\\Workshop4\\src\\main\\java\\Data\\pets.csv";
-
     public Archivo() {
 
     }
-
     public void escribirArchivo(ArrayList<Usuario> lista) {
         System.out.println("Entro al escribir");
         String DELIMITADOR = ",";
         String SALTO = "\n";
         FileWriter bw;
         try {
-            bw = new FileWriter(SAMPLE_CSV_FILE);
+            bw = new FileWriter("C:\\Users\\Robinson\\Workshop4\\src\\main\\java\\Data\\pets.csv");
 
             for (Usuario pet : lista) {
                 bw.append(SALTO);
@@ -44,7 +41,7 @@ public class Archivo {
         ArrayList<Usuario> lista = new ArrayList<Usuario>();
         BufferedReader bufferLectura = null;
         try {
-            bufferLectura = new BufferedReader(new FileReader(SAMPLE_CSV_FILE));
+            bufferLectura = new BufferedReader(new FileReader("C:\\Users\\Robinson\\Workshop4\\src\\main\\java\\Data\\pets.csv"));
             String linea = bufferLectura.readLine();
 
             while (linea != null) {
