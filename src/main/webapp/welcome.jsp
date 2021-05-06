@@ -31,16 +31,7 @@
         <div class="col-lg-4 col-10">
             <div class="tm-brand-container">
                 <div class="tm-brand-texts">
-                    <%
-                        String nombre = request.getParameter("user");
-                        out.println("<h1 class=\"text-uppercase tm-brand-name\"> User: " + nombre + "</h1>");
-                        try {
-                            Cookie c1 = new Cookie("user", nombre);
-                            response.addCookie(c1);
-                        } catch (Exception e) {
-
-                        }
-                    %>
+                    <h1 class="text-uppercase tm-brand-name">Pets citizens</h1>
                 </div>
             </div>
         </div>
@@ -153,7 +144,7 @@
         </div>
     </section>
     <input name="ver" type="button" value="Ver Informacion" id="ver" onclick="mostrarMascota(servlet = 'json')"/>
-    <div id = "mostrarAgregar">
+    <div id = "mostrarAgregar" style="text-align:center;">
         <table id = "table" class="table table-dark table-striped table-bordered">
             <thead>
             <tr>
@@ -161,6 +152,7 @@
                 <td>Descripcion</td>
                 <td>Fecha</td>
                 <td>Foto</td>
+                <td>Descargar</td>
             </tr>
             </thead>
             <tbody id = "crearTabla">
@@ -231,16 +223,25 @@
                 contenido.innerHTML = '';
                 for (let item of data) {
                     if(item.nombreUsuarion == cookie){
-                        contenido.innerHTML += '<tr>' + '<td>' + item.nombre + '</td>' + '<td>' + item.descripcion + '</td>' + '<td>' + item.fecha + '</td>' + '<td>' + '<img src = "' + 'upload/' + item.foto + '" width="100" height="100">' +'</td>' + '</tr>';
+                        contenido.innerHTML += '<tr>' + '<td>' + item.nombre + '</td>' + '<td>' + item.descripcion + '</td>' + '<td>' + item.fecha + '</td>' + '<td>' + '<img src = "' + 'upload/' + item.foto + '" width="100" height="100">' +'</td>' + '<td>' + '    <input name="ver" type="button" value="Descargar" id="ver" onclick="descargar()"/>' + '</td>' + '</tr>';
                     }
                 }
             }
         }
     }
+    function descargar(servelt){
+    alert("Funciona boton")
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', '${pageContext.request.contextPath}/' + servlet, true);
+        xhr.send();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                console.log(xhr.responseText);
+            }
+        }
+    }
+    descargar(servlet='descarga');
 </script>
-
-
-
 </body>
 
 </html>

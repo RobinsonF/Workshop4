@@ -18,7 +18,7 @@ public class Archivo {
         String SALTO = "\n";
         FileWriter bw;
         try {
-            bw = new FileWriter("C:\\Users\\fabic\\Workshop4\\src\\main\\java\\Data\\pets.csv");
+            bw = new FileWriter("C:\\Users\\Robinson\\Workshop4\\src\\main\\java\\Data\\pets.csv");
 
             for (Usuario pet : lista) {
                 bw.append(SALTO);
@@ -43,7 +43,7 @@ public class Archivo {
         ArrayList<Usuario> lista = new ArrayList<Usuario>();
         BufferedReader bufferLectura = null;
         try {
-            bufferLectura = new BufferedReader(new FileReader("C:\\Users\\fabic\\Workshop4\\src\\main\\java\\Data\\pets.csv"));
+            bufferLectura = new BufferedReader(new FileReader("C:\\Users\\Robinson\\Workshop4\\src\\main\\java\\Data\\pets.csv"));
             String linea = bufferLectura.readLine();
 
             while (linea != null) {
