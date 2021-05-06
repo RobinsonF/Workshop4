@@ -2,7 +2,9 @@
 Guias
 
 https://github.com/eugenp/tutorials/tree/master/javax-servlets
+
 https://docs.oracle.com/javaee/6/tutorial/doc/gipvi.html
+
 https://zetcode.com/articles/javaservletjquerylist/ 
 
 Pequeño problema
