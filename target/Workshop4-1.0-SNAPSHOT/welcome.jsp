@@ -240,7 +240,6 @@
             }
         }
     }
-    descargar(servlet='descarga');
 </script>
 </body>
 
