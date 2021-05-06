@@ -25,12 +25,23 @@ import java.util.stream.Collectors;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024,
         maxFileSize = 1024 * 1024 * 5,
         maxRequestSize = 1024 * 1024 * 5 * 5)
+/**
+ * InformacionServlet class
+ * The InformacionServlet class allows us to store the information of the downloads that the servlet allows us to do
+ * inside an arraylist that has the user name, in addition to extending the httpServlet class
+ */
 public class InformacionServlet extends HttpServlet {
     ArrayList<Usuario> listaUsuario = new ArrayList<Usuario>();
     Archivo archivo = new Archivo();
     Usuario user = new Usuario();
     private static final long serialVersionUID = 1L;
 
+    /**
+     * class of type string of name get file name, this method is in charge of obtaining the photo entered in the data
+     * requested by the program
+     * @param part
+     * @return default.file
+     */
     private String getFileName(Part part) {
         for (String content : part.getHeader("content-disposition").split(";")) {
             if (content.trim().startsWith("filename"))
@@ -38,9 +49,23 @@ public class InformacionServlet extends HttpServlet {
         }
         return "default.file";
     }
+
+    /**
+     * Servlet information method, this is responsible for saving or storing the information registered within the data
+     * requested in the user arraylist within the userlist parameter, also allows us to save it in the file
+     */
     public InformacionServlet(){
         listaUsuario = archivo.leerArchivo();
     }
+
+    /**
+     * DoPost method, this method is responsible for storing all the pet information to make the proper registration,
+     * it contains the request and response parameters, which are derived from the HttpServlet
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws ServletException
+     */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
         Cookie[] cookies = request.getCookies();
@@ -78,6 +103,13 @@ public class InformacionServlet extends HttpServlet {
         dis.forward(request,response);
     }
 
+    /**
+     * SearchCookie method, this method is in charge of saving the cookies of the user who has registered, of
+     * parameters it contains a user string and an arrangement called cookie
+     * @param nombre
+     * @param cookies
+     * @return null
+     */
     private Cookie buscaCookie(String nombre, Cookie[] cookies) {
         if (cookies == null)
             return null;
