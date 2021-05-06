@@ -1,3 +1,6 @@
+/**
+ * Bosque university model-persistence package
+ */
 package co.edu.unbosque.model.persistencia;
 
 import co.edu.unbosque.Workshop4.Usuario;
@@ -8,10 +11,20 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * Persistence class
+ * Data persistence is a means by which the application can retrieve information from a non-volatile storage system
+ */
 public class Archivo {
     public Archivo() {
 
     }
+
+    /**
+     * Write file method, this method allows us to write inside the ArrayList that we call User through the list
+     * parameter
+     * @param lista
+     */
     public void escribirArchivo(ArrayList<Usuario> lista) {
         System.out.println("Entro al escribir");
         String DELIMITADOR = ",";
@@ -39,6 +52,12 @@ public class Archivo {
 
         }
     }
+
+    /**
+     * Read file method, this method allows us to read a file or files from the CSV using Java, the information stored
+     * by the User ArrayList is read
+     * @return
+     */
     public ArrayList<Usuario> leerArchivo() {
         ArrayList<Usuario> lista = new ArrayList<Usuario>();
         BufferedReader bufferLectura = null;
